@@ -5,12 +5,22 @@
 <title>Cafe Neurotico Clock</title>
 <style>
   /* ── FONTS ────────────────────────────────────────────────────────────────── */
+  /* Interface faces offered by the font picker. All bundled — nothing is fetched. */
   @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Regular.ttf') format('truetype'); font-weight: 400; }
   @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Bold.ttf')    format('truetype'); font-weight: 700; }
   @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Black.ttf')   format('truetype'); font-weight: 900; }
+  @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Regular.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Bold.ttf')    format('truetype'); font-weight: 700; }
+  @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Black.ttf')   format('truetype'); font-weight: 900; }
+  @font-face { font-family: 'Sora';             src: url('assets/fonts/Sora.ttf')            format('truetype'); }
+  @font-face { font-family: 'Inter';            src: url('assets/fonts/Inter.ttf')           format('truetype'); }
+  @font-face { font-family: 'Fraunces';         src: url('assets/fonts/Fraunces.ttf')        format('truetype'); }
+  @font-face { font-family: 'Chicago';          src: url('assets/fonts/ChicagoFLF.ttf')      format('truetype'); }
+  @font-face { font-family: 'PxPlus IBM VGA8';  src: url('assets/fonts/PxPlusIBMVGA8.ttf')   format('truetype'); }
 
   /* ── PALETTE ──────────────────────────────────────────────────────────────── */
   :root {
+    --ui-font:      'Raleway', sans-serif;
     --bg:           #2C1E16;
     --bg_panel:     rgba(67,40,24,0.6);
     --bg_menu:      #432818;
@@ -27,7 +37,7 @@
 
   body {
     background: transparent;
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--ui-font);
     overflow: hidden;
     width: 100vw;
     height: 100vh;
@@ -35,7 +45,7 @@
     -webkit-app-region: drag;
   }
 
-  button, input, select { -webkit-app-region: no-drag; font-family: 'Raleway', sans-serif; }
+  button, input, select { -webkit-app-region: no-drag; font-family: var(--ui-font); }
 
   /* ── ROOT CONTAINER ────────────────────────────────────────────────────────── */
   #app {
@@ -258,7 +268,7 @@
   #kb-game-label.visible { opacity: 1; }
   #app.theme-minimalist #kb-game-label { display: none !important; }
   #kb-game-name {
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--ui-font);
     font-size: 11px;
     font-weight: 700;
     color: rgba(255,255,255,0.88);

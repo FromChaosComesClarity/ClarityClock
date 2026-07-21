@@ -14,6 +14,7 @@ const DEFAULTS = {
     alwaysOnTop:  true,
     colorTheme:   'CREMA',
     showGameName: true,
+    uiFont:       'Raleway',
 };
 
 const THEME_SIZES = {

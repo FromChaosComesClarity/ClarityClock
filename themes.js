@@ -70,3 +70,15 @@ const CN_THEME_CATEGORIES = {
     "Horror Realm":       ["CRIMSON PEAK","LAKESIDE CURSE","THE BACKROOMS"],
     "PSIII Colors":       ["PSIII CLASSIC","PSIII RED","PSIII GREEN","PSIII BLUE","PSIII PURPLE","PSIII GOLD","PSIII SILVER"],
 };
+
+// Interface faces offered by the font picker, mirroring Cafe Neurotico's list.
+// `name` is both the CSS family (see the @font-face blocks) and the stored value.
+const CN_FONTS = [
+    { name: 'Raleway',            label: 'Raleway (default)' },
+    { name: 'Poppins',            label: 'Poppins'           },
+    { name: 'Sora',               label: 'Sora'              },
+    { name: 'Inter',              label: 'Inter'             },
+    { name: 'Fraunces',           label: 'Fraunces'          },
+    { name: 'Chicago',            label: 'ChicagoFLF'        },
+    { name: 'PxPlus IBM VGA8',    label: 'PxPlus IBM VGA8'   },
+];

@@ -1,6 +1,6 @@
 'use strict';
 
-let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'CREMA', showGameName: false };
+let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'CREMA', showGameName: false, uiFont: 'Raleway' };
 let kbImages          = [];
 let kbIndex           = 0;
 let kbActive          = 'a';
@@ -14,6 +14,7 @@ const BASE_W = { minimalist: 400, crema: 700, kenburns: 900 };
 async function init() {
     settings = await window.api.loadSettings();
     applyColorTheme(settings.colorTheme || 'CREMA');
+    applyUiFont(settings.uiFont);
     // applyTheme already scans and starts the slideshow when the theme needs it.
     // Repeating that here walked the whole art library a second time on every launch.
     applyTheme(settings.theme);
@@ -63,6 +64,13 @@ function applyColorTheme(name) {
     const root = document.documentElement;
     Object.entries(t).forEach(([k, v]) => root.style.setProperty(`--${k}`, v));
     settings.colorTheme = name;
+}
+
+// ── Interface font ─────────────────────────────────────────────────────────────
+function applyUiFont(name) {
+    const font = CN_FONTS.some(f => f.name === name) ? name : 'Raleway';
+    document.documentElement.style.setProperty('--ui-font', `'${font}', sans-serif`);
+    settings.uiFont = font;
 }
 
 // ── Visual theme ───────────────────────────────────────────────────────────────
@@ -238,6 +246,10 @@ function setupSettingListener() {
         }
         if (key === 'colorTheme') {
             applyColorTheme(val);
+        }
+        if (key === 'uiFont') {
+            applyUiFont(val);
+            updateClockScale();   // metrics differ per face; rescale to the new one
         }
         if (key === 'showGameName') {
             settings.showGameName = val;

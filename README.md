@@ -104,6 +104,8 @@ All windows are **freely resizable** — the clock text scales proportionally wi
 
 **58 palettes** organized across 7 categories. Applied live — no restart.
 
+The picker opens as a card grid — every palette previewed in its own colors, filterable by category.
+
 | Category | Themes |
 |:---|:---|
 | **Originals & System** | DARK GRAY · CREMA · CYBERPUNK · SNOW · MOVIESFLIX · VAPOUR OS · PSIV BLUE · GREEN BOX · WIN XP |
@@ -115,6 +117,22 @@ All windows are **freely resizable** — the clock text scales proportionally wi
 | **PSIII Colors** | CLASSIC · RED · GREEN · BLUE · PURPLE · GOLD · SILVER |
 
 The color theme also affects the Minimalist widget background — each palette tints the transparency to match its own `bg` color.
+
+<br>
+
+---
+
+<br>
+
+## ◈ &nbsp; Interface Font
+
+Seven faces, all bundled with the AppImage — nothing is fetched at runtime:
+
+```
+Raleway (default) · Poppins · Sora · Inter · Fraunces · ChicagoFLF · PxPlus IBM VGA8
+```
+
+The picker previews each face in itself. Your choice applies to the clock and the settings window together, and it survives a restart.
 
 <br>
 
@@ -182,7 +200,8 @@ Open with the **⚙** button (top-right of any clock window).
 | **Art Slideshow** | Off · On | On | Enables the KB background on Minimalist and CREMA themes |
 | **Image Source** | All · Heroes · Covers · Screenshots · Wallpapers | All | Filters which images appear in the slideshow |
 | **Show Game Name** | Off · On | On | Displays the game title while each image is on screen |
-| **Color Theme** | 58 palettes | CREMA | Live preview — the settings window recolors itself too |
+| **Color Theme** | 58 palettes | CREMA | Opens a picker; live preview — the settings window recolors itself too |
+| **Interface Font** | 7 bundled faces | Raleway | Applies to the clock and the settings window alike |
 
 <br>
 
