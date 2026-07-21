@@ -12,6 +12,7 @@
 
 <br>
 
+[![Version 1.0](https://img.shields.io/badge/Version-1.0-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/shampoo-is-a-lie/CafeNeuroticoClock/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-8B5A2B?style=flat-square&labelColor=2C1E16)](LICENSE)
 [![Platform: Linux](https://img.shields.io/badge/Platform-Linux-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/shampoo-is-a-lie)
 [![Built with Electron](https://img.shields.io/badge/Built%20with-Electron%2041-A47148?style=flat-square&labelColor=2C1E16)](https://electronjs.org)
@@ -27,7 +28,7 @@
 
 ## ◈ &nbsp; What It Is
 
-A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **CNGM** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Cafe Neurotico ecosystem — 54 color palettes, warm typography, no decorations that weren't earned.
+A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **CNGM** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Cafe Neurotico ecosystem — 58 color palettes, warm typography, no decorations that weren't earned.
 
 It's small enough to tuck into a corner. Beautiful enough to leave in the middle of your screen.
 
@@ -41,7 +42,7 @@ It's small enough to tuck into a corner. Beautiful enough to leave in the middle
 
 > **Run as many clocks as you want, simultaneously.**
 
-Launch the AppImage multiple times — each instance is independent. Give each one a different visual theme, a different color palette, a different size. Park one in a corner of your main monitor showing the time in **Minimalist** mode. Open another on your secondary screen in **Ken Burns** mode cycling through game art. Stack a third in CREMA Splash if you just want something large and atmospheric.
+Launch the AppImage multiple times — each running instance is independent. Give each one a different visual theme, a different color palette, a different size. Park one in a corner of your main monitor showing the time in **Minimalist** mode. Open another on your secondary screen in **Ken Burns** mode cycling through game art. Stack a third in CREMA Splash if you just want something large and atmospheric.
 
 No configuration needed. Just launch it again.
 
@@ -51,7 +52,13 @@ No configuration needed. Just launch it again.
 ./CafeNeuroticoClock.AppImage &
 ```
 
-Each instance has its own settings window and saves nothing to a shared state that would affect the others.
+Each instance has its own settings window, and changing a setting in one never disturbs the others while they're running.
+
+> **One saved configuration, shared.** All instances read and write the same
+> `GameManagerConfig/CafeNeuroticoClock/settings.json`. Your per-window arrangement lives only for
+> as long as those windows do — the next launch starts every clock from whichever settings were
+> written last. Arrange them freely at runtime; just don't expect the arrangement to survive a
+> restart.
 
 <br>
 
@@ -95,7 +102,7 @@ All windows are **freely resizable** — the clock text scales proportionally wi
 
 ## ◈ &nbsp; Color Themes
 
-**54 palettes** organized across 7 categories. Applied live — no restart.
+**58 palettes** organized across 7 categories. Applied live — no restart.
 
 | Category | Themes |
 |:---|:---|
@@ -175,7 +182,27 @@ Open with the **⚙** button (top-right of any clock window).
 | **Art Slideshow** | Off · On | On | Enables the KB background on Minimalist and CREMA themes |
 | **Image Source** | All · Heroes · Covers · Screenshots · Wallpapers | All | Filters which images appear in the slideshow |
 | **Show Game Name** | Off · On | On | Displays the game title while each image is on screen |
-| **Color Theme** | 54 palettes | CREMA | Live preview — the settings window recolors itself too |
+| **Color Theme** | 58 palettes | CREMA | Live preview — the settings window recolors itself too |
+
+<br>
+
+---
+
+<br>
+
+## ◈ &nbsp; Language
+
+The interface is **English only**. There are perhaps thirty user-facing strings in the whole app, so a translation is cheap to add later — open an issue if you want one.
+
+<br>
+
+---
+
+<br>
+
+## ◈ &nbsp; Privacy
+
+No network access, no telemetry, no accounts, no runtime dependencies. Fonts are bundled with the AppImage rather than fetched. The only file the clock ever writes is its own `settings.json`.
 
 <br>
 

@@ -8,7 +8,14 @@ async function init() {
     syncUI();
     buildThemePicker();
     wireControls();
+    showVersion();
     if (settings.imageSource === 'wallpapers') checkWallpapers();
+}
+
+// ── About ──────────────────────────────────────────────────────────────────────
+async function showVersion() {
+    const v = await window.api.getAppVersion();
+    document.getElementById('about-version').textContent = v ? `VERSION ${v}` : '';
 }
 
 // ── Color theme ────────────────────────────────────────────────────────────────

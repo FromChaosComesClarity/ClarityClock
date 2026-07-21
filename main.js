@@ -69,6 +69,8 @@ app.on('window-all-closed', () => app.quit());
 
 ipcMain.handle('load-settings', () => readSettings());
 
+ipcMain.handle('get-app-version', () => { try { return app.getVersion(); } catch { return ''; } });
+
 ipcMain.handle('set-theme-size', (_, theme) => {
     const sz = THEME_SIZES[theme] || THEME_SIZES.minimalist;
     if (win) win.setSize(sz.w, sz.h, true);
@@ -115,10 +117,12 @@ ipcMain.on('open-settings-window', () => {
     settingsWin.on('closed', () => { settingsWin = null; });
 });
 
-ipcMain.on('settings-win-close', () => {
-    settingsWin?.close();
-    settingsWin = null;
-});
+// Let the window's own 'closed' event be the only thing that clears settingsWin.
+// Nulling it eagerly here opened a race: between close() and 'closed' firing, the guard
+// in 'open-settings-window' saw null and built a second window, which the late 'closed'
+// then orphaned — leaving a frameless, taskbar-less window whose Done and ✕ both
+// no-op'd on a null reference, so it could not be closed at all.
+ipcMain.on('settings-win-close', () => settingsWin?.close());
 
 ipcMain.on('win-minimize', () => win?.minimize());
 ipcMain.on('win-close',    () => win?.close());

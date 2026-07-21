@@ -14,15 +14,10 @@ const BASE_W = { minimalist: 400, crema: 700, kenburns: 900 };
 async function init() {
     settings = await window.api.loadSettings();
     applyColorTheme(settings.colorTheme || 'CREMA');
+    // applyTheme already scans and starts the slideshow when the theme needs it.
+    // Repeating that here walked the whole art library a second time on every launch.
     applyTheme(settings.theme);
     startClock();
-
-    const kbOn = settings.kenBurns || settings.theme === 'kenburns';
-    if (kbOn) {
-        const imgs = await window.api.scanImages(settings.imageSource);
-        kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '' })));
-        startKB();
-    }
 
     wireControls();
     setupResizeObserver();
@@ -82,7 +77,9 @@ function applyTheme(theme) {
     if (kbOn && kbImages.length === 0) {
         window.api.scanImages(settings.imageSource).then(imgs => {
             kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '' })));
-            setKBVisible(true);
+            // With no art on disk there is nothing to reveal, and switching the layer on
+            // would lay the readability gradient over an empty background.
+            setKBVisible(kbImages.length > 0);
         });
     } else {
         setKBVisible(kbOn);

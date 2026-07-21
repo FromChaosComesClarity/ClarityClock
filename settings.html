@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Clock Settings</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
+  @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Regular.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Bold.ttf')    format('truetype'); font-weight: 700; }
+  @font-face { font-family: 'Raleway'; src: url('assets/fonts/Raleway-Black.ttf')   format('truetype'); font-weight: 900; }
+
   :root {
     --bg:           #2C1E16;
     --bg_panel:     rgba(67,40,24,0.6);
@@ -208,6 +211,55 @@
     border: 1.5px solid;
   }
 
+  /* ── About ───────────────────────────────────────────────────────────────── */
+  #about {
+    border: 1px solid var(--border_solid);
+    border-radius: 6px;
+    background: rgba(0,0,0,0.25);
+    padding: 14px 14px 12px;
+    text-align: center;
+  }
+  #about-name {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--text_main);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  #about-tag {
+    font-size: 10px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    margin-top: 3px;
+  }
+  #about-version {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text_dim);
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+  #about-blurb {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text_sec);
+    line-height: 1.7;
+    text-align: justify;
+    margin-top: 10px;
+  }
+  #about-legal {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text_dim);
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px solid var(--border_solid);
+  }
+
   /* ── Done button ─────────────────────────────────────────────────────────── */
   #btn-done {
     width: 100%;
@@ -274,6 +326,27 @@
 
     <div class="s-section-label">Color Theme</div>
     <div id="theme-picker"></div>
+
+    <div class="s-divider"></div>
+
+    <div class="s-section-label">About</div>
+    <div id="about">
+      <div id="about-name">CafeNeurotico Clock</div>
+      <div id="about-tag">a desk clock with taste</div>
+      <div id="about-version"></div>
+      <div id="about-blurb">
+        A frameless desk clock in three faces, with a Ken Burns slideshow built from the game
+        art <strong>CNGM</strong> and <strong>EmuLatte</strong> already keep on disk &mdash; it
+        finds them by scanning, with nothing to configure. Part of the <strong>Cafe
+        Neurotico</strong> ecosystem, and perfectly happy on its own.
+      </div>
+      <div id="about-legal">
+        Licensed GPL-3.0-or-later<br>
+        github.com/shampoo-is-a-lie/CafeNeuroticoClock<br>
+        Designed in Brazil by J.R.A. &mdash; Shampoo is a Lie<br>
+        shampooisalie@gmail.com
+      </div>
+    </div>
 
     <button id="btn-done">Done</button>
 
