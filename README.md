@@ -157,6 +157,8 @@ Images are classified by filename and directory. You can narrow the source to a 
 
 Enable **Show Game Name** in settings to display a label with the game title while each image is shown.
 
+**Click that label to open the game where it lives** — CNGM art opens Cafe Neurotico at that game's page, EmuLatte art opens EmuLatte at its own. This needs the sibling AppImage sitting in the same folder as the clock. Art whose game has since been renamed or removed still opens the app, just at the library.
+
 <br>
 
 ---
@@ -236,7 +238,9 @@ The interface is **English only**. There are perhaps thirty user-facing strings 
 
 ## ◈ &nbsp; Privacy
 
-No network access, no telemetry, no accounts, no runtime dependencies. Fonts are bundled with the AppImage rather than fetched. The only file the clock ever writes is its own `settings.json`.
+No network access, no telemetry, no accounts, no runtime dependencies. Fonts are bundled with the AppImage rather than fetched.
+
+The only file the clock ever **writes** is its own `settings.json`. It **reads** two databases, strictly read-only and only to turn an art filename back into a game title: CNGM's `games.db` and EmuLatte's `emulatte.db`. Neither has to exist — without them the clock still runs, it just shows no game names.
 
 <br>
 

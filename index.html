@@ -264,11 +264,13 @@
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 6px;
     padding: 5px 12px;
-    pointer-events: none;
     max-width: 70%;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, border-color 0.15s, background 0.15s;
+    -webkit-app-region: no-drag;   /* the window is draggable; this must stay clickable */
+    cursor: pointer;
   }
+  #kb-game-label:hover { background: rgba(0,0,0,0.75); border-color: var(--accent); }
   #kb-game-label.visible { opacity: 1; }
   #app.theme-minimalist #kb-game-label { display: none !important; }
   #kb-game-name {

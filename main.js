@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs   = require('fs');
 const os   = require('os');
-const { execFile } = require('child_process');
+const { execFile, spawn } = require('child_process');
 
 let baseDir = process.env.APPIMAGE ? path.dirname(process.env.APPIMAGE) : __dirname;
 
@@ -173,18 +173,114 @@ function toFileUrl(p) {
     return 'file://' + encodeURI(abs).replace(/#/g, '%23').replace(/\?/g, '%3F');
 }
 
-ipcMain.handle('scan-images', (_, source) => {
+// Open a game in the app that owns it. Both apps take --game=<id>; each already holds a
+// single-instance lock, so a second launch is forwarded to the running window rather
+// than starting a rival copy. Requires the sibling AppImage to sit beside ours.
+ipcMain.handle('open-game', (_, app_, id) => {
+    const pattern = app_ === 'emulatte' ? /^EmuLatte.*\.AppImage$/i : /^CafeNeurotico(?!Clock).*\.AppImage$/i;
+    let file;
+    try { file = fs.readdirSync(baseDir).find(f => pattern.test(f)); } catch {}
+    if (!file) return { success: false, message: `${app_ === 'emulatte' ? 'EmuLatte' : 'CafeNeurotico'} not found beside the clock.` };
+
+    const target = path.join(baseDir, file);
+    try { fs.chmodSync(target, 0o755); } catch {}
+    try {
+        const child = spawn(target, id != null ? [`--game=${id}`] : [], { detached: true, stdio: 'ignore' });
+        child.unref();
+        return { success: true };
+    } catch (err) {
+        return { success: false, message: err.message };
+    }
+});
+
+// ── Resolving art back to a game ──────────────────────────────────────────────
+// Art filenames already identify the game: EmuLatte writes every file as
+// <romId>_<type>, and CNGM uses either <gameId>_<store>_<type>_<stamp> or the game's
+// own title with the characters its getBeautifulName() strips. We read both databases
+// *read-only*, purely to turn that into a real title and an id the owning app can open.
+// Both are optional — a clock sitting on its own has neither, and simply shows no label.
+const CNGM_DB = () => path.join(baseDir, 'GameManagerConfig', 'games.db');
+const EMU_DB  = () => path.join(baseDir, 'GameManagerConfig', 'EmuLatte', 'emulatte.db');
+
+let _maps = null;
+
+// CNGM strips these when naming art; mirror it so titles match back.
+const beautify = s => s.replace(/[\\/:*?"<>|#]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+function readGameMaps() {
+    if (_maps) return _maps;
+    _maps = { cngmById: new Map(), cngmByName: new Map(), emuById: new Map() };
+
+    let DatabaseSync;
+    try { ({ DatabaseSync } = require('node:sqlite')); } catch { return _maps; }
+
+    const load = (file, sql, onRow) => {
+        if (!fs.existsSync(file)) return;
+        let db;
+        try {
+            db = new DatabaseSync(file, { readOnly: true });
+            for (const row of db.prepare(sql).all()) onRow(row);
+        } catch {
+            // Locked, mid-write or an unexpected schema — labels are a nicety, never fatal.
+        } finally {
+            try { db?.close(); } catch {}
+        }
+    };
+
+    load(CNGM_DB(), 'SELECT id, Game FROM games WHERE Game IS NOT NULL', r => {
+        _maps.cngmById.set(Number(r.id), r.Game);
+        _maps.cngmByName.set(beautify(String(r.Game)), Number(r.id));
+    });
+    load(EMU_DB(), 'SELECT id, title FROM games WHERE title IS NOT NULL', r => {
+        _maps.emuById.set(Number(r.id), r.title);
+    });
+
+    return _maps;
+}
+
+// Returns { app, id, name } — name '' when nothing matched, so the label stays hidden.
+function resolveGame(stem, src) {
+    const m = readGameMaps();
+
+    if (src === 'emulatte') {
+        // <romId>_<type>, or a bare <romId>.
+        const lead = stem.match(/^(\d+)(?:_|$)/);
+        const id   = lead ? Number(lead[1]) : null;
+        const name = id !== null ? m.emuById.get(id) : null;
+        return name ? { app: 'emulatte', id, name } : { app: 'emulatte', id: null, name: '' };
+    }
+
+    // CNGM: <gameId>_<store>_<type>_<stamp> is exact. The trailing underscore matters —
+    // without it a title like "1000xRESIST" would be read as game id 1000.
+    const lead = stem.match(/^(\d+)_/);
+    if (lead && m.cngmById.has(Number(lead[1]))) {
+        const id = Number(lead[1]);
+        return { app: 'cngm', id, name: m.cngmById.get(id) };
+    }
+
+    // Strip the type suffix and any scraper tag the type regex leaves behind.
+    const base  = stem.replace(/[\s_-]*(cover|hero|screen(?:shot)?|logo)[\s_\d-]*$/i, '');
+    const title = base.replace(/[_-]+/g, ' ').replace(/\s+(sgdb|custom)$/i, '').replace(/\s+/g, ' ').trim();
+    const id    = m.cngmByName.get(beautify(title));
+    if (id !== undefined) return { app: 'cngm', id, name: m.cngmById.get(id) };
+
+    // No match — art for a game that was renamed or removed. Still label it from the
+    // filename so it can be clicked; without an id the click just opens the library.
+    return { app: 'cngm', id: null, name: title };
+}
+
+function scanImages(source) {
     const EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
     const imgs = [];
 
-    const walk = (dir) => {
+    const walk = (dir, src) => {
         if (!fs.existsSync(dir)) return;
         let entries;
         try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
         for (const e of entries) {
             const full = path.join(dir, e.name);
             if (e.isDirectory()) {
-                walk(full);
+                walk(full, src);
             } else if (EXTS.has(path.extname(e.name).toLowerCase())) {
                 const parent = path.basename(dir).toLowerCase();
                 const name   = e.name.toLowerCase();
@@ -202,28 +298,29 @@ ipcMain.handle('scan-images', (_, source) => {
                                    : 'other';
                 const type = typeFromDir || typeFromFile;
 
-                // Extract a display-friendly game name from the filename
-                const stem      = path.basename(e.name, path.extname(e.name));
-                const nameMatch = stem.match(/^(.*?)[\s_-]*(cover|hero|screen(?:shot)?|logo)[\s_\d-]*$/i);
-                const gameName  = nameMatch
-                    ? nameMatch[1].replace(/[_-]+/g, ' ').trim()
-                    : stem.replace(/[_-]+/g, ' ').trim();
+                // The owning app's database gives the real title and the id it can open.
+                const stem = path.basename(e.name, path.extname(e.name));
+                const g    = src === 'wallpapers'
+                    ? { app: null, id: null, name: '' }
+                    : resolveGame(stem, src);
 
-                imgs.push({ path: toFileUrl(full), type, name: type === 'wallpapers' ? '' : gameName });
+                imgs.push({ path: toFileUrl(full), type, name: g.name, app: g.app, gameId: g.id });
             }
         }
     };
 
     // CNGM: flat images dir, all types mixed
-    walk(path.join(baseDir, 'GameManagerConfig', 'images'));
+    walk(path.join(baseDir, 'GameManagerConfig', 'images'), 'cngm');
     // EmuLatte: structured subdirs
-    walk(path.join(baseDir, 'GameManagerConfig', 'EmuLatte', 'images'));
+    walk(path.join(baseDir, 'GameManagerConfig', 'EmuLatte', 'images'), 'emulatte');
     // User-provided wallpapers alongside the AppImage
-    walk(path.join(baseDir, 'GameManagerConfig', 'wallpapers'));
+    walk(path.join(baseDir, 'GameManagerConfig', 'wallpapers'), 'wallpapers');
 
     if (source && source !== 'all')
         return imgs.filter(x => x.type === source);
 
     // "all" = game art only; logos and wallpapers are opt-in via their own buttons
     return imgs.filter(x => x.type !== 'logos' && x.type !== 'wallpapers');
-});
+}
+
+ipcMain.handle('scan-images', (_, source) => scanImages(source));

@@ -90,7 +90,7 @@ function applyTheme(theme) {
     const kbOn = theme === 'kenburns' || settings.kenBurns;
     if (kbOn && kbImages.length === 0) {
         window.api.scanImages(settings.imageSource).then(imgs => {
-            kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '' })));
+            kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '', app: x.app || '', gameId: x.gameId })));
             // With no art on disk there is nothing to reveal, and switching the layer on
             // would lay the readability gradient over an empty background.
             setKBVisible(kbImages.length > 0);
@@ -101,11 +101,15 @@ function applyTheme(theme) {
 }
 
 // ── Game name label ────────────────────────────────────────────────────────────
-function showGameLabel(name) {
+function showGameLabel(name, app, gameId) {
     if (!settings.showGameName || !name || /^\d+$/.test(name.trim())) return;
     const el     = document.getElementById('kb-game-label');
     const nameEl = document.getElementById('kb-game-name');
     if (!el || !nameEl) return;
+    // Remembered here so a click always refers to the image currently on screen.
+    el.dataset.app    = app || '';
+    el.dataset.gameId = gameId == null ? '' : String(gameId);
+    el.title = app === 'emulatte' ? `Open ${name} in EmuLatte` : `Open ${name} in Cafe Neurotico`;
     // Cancel any in-flight hide transition so it can't overwrite display:block below.
     if (_labelHideHandler) {
         el.removeEventListener('transitionend', _labelHideHandler);
@@ -151,7 +155,9 @@ function loadNextInto(el, onReady, attempt = 0) {
         el.style.transition = '';
         el.style.opacity    = '';
         el.classList.add(randomV()); // animation starts now, independent of visible
-        el.dataset.name = img.name || '';
+        el.dataset.name   = img.name || '';
+        el.dataset.app    = img.app || '';
+        el.dataset.gameId = img.gameId == null ? '' : String(img.gameId);
         onReady(el);
     };
     el.onerror = () => {
@@ -168,7 +174,7 @@ function startKB() {
     loadNextInto(document.getElementById('kb-img-a'), el => {
         requestAnimationFrame(() => {
             el.classList.add('visible');
-            showGameLabel(el.dataset.name);
+            showGameLabel(el.dataset.name, el.dataset.app, el.dataset.gameId);
         });
         kbTimer = setInterval(crossfadeKB, KB_INTERVAL);
     });
@@ -201,7 +207,7 @@ function crossfadeKB() {
     loadNextInto(inEl, el => {
         requestAnimationFrame(() => {
             el.classList.add('visible');
-            showGameLabel(el.dataset.name);
+            showGameLabel(el.dataset.name, el.dataset.app, el.dataset.gameId);
             // Begin fading out the old image after the new one is fully visible,
             // then hard-reset it once the CSS fade-out (1.5s) is done.
             // setTimeout is used instead of transitionend — more reliable; transitionend
@@ -230,7 +236,7 @@ function setupSettingListener() {
             const kbOn = val || settings.theme === 'kenburns';
             if (kbOn && !kbImages.length) {
                 window.api.scanImages(settings.imageSource).then(imgs => {
-                    kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '' })));
+                    kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '', app: x.app || '', gameId: x.gameId })));
                     setKBVisible(true);
                 });
             } else {
@@ -244,7 +250,7 @@ function setupSettingListener() {
                 const wasRunning = !!kbTimer;
                 stopKB();
                 window.api.scanImages(val).then(imgs => {
-                    kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '' })));
+                    kbImages = shuffle(imgs.map(x => ({ path: x.path, name: x.name || '', app: x.app || '', gameId: x.gameId })));
                     kbIndex  = 0;
                     if (wasRunning || settings.theme === 'kenburns') startKB();
                 });
@@ -263,7 +269,7 @@ function setupSettingListener() {
                 hideGameLabel();
             } else {
                 const visEl = document.querySelector('.kb-img.visible');
-                if (visEl?.dataset.name) showGameLabel(visEl.dataset.name);
+                if (visEl?.dataset.name) showGameLabel(visEl.dataset.name, visEl.dataset.app, visEl.dataset.gameId);
             }
         }
     });
@@ -274,6 +280,24 @@ function wireControls() {
     document.getElementById('btn-minimize').addEventListener('click', () => window.api.minimize());
     document.getElementById('btn-close').addEventListener('click',    () => window.api.close());
     document.getElementById('btn-settings').addEventListener('click', () => window.api.openSettingsWindow());
+
+    // Click the game name to open it where it lives. Without a resolved id the app
+    // still opens, just at its library.
+    document.getElementById('kb-game-label').addEventListener('click', async () => {
+        const el  = document.getElementById('kb-game-label');
+        const app = el.dataset.app;
+        if (!app) return;
+        const id  = el.dataset.gameId === '' ? null : Number(el.dataset.gameId);
+        const res = await window.api.openGame(app, id);
+        if (!res?.success) {
+            // The sibling AppImage isn't beside us — say so on the label itself rather
+            // than failing silently, then put the name back.
+            const nameEl = document.getElementById('kb-game-name');
+            const prev   = nameEl.textContent;
+            nameEl.textContent = res?.message || 'Could not open';
+            setTimeout(() => { nameEl.textContent = prev; }, 2600);
+        }
+    });
 }
 
 init();

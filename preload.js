@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('api', {
     minimize:           ()        => ipcRenderer.send('win-minimize'),
     close:              ()        => ipcRenderer.send('win-close'),
     openSettingsWindow: ()        => ipcRenderer.send('open-settings-window'),
+    openGame:           (app, id) => ipcRenderer.invoke('open-game', app, id),
     onSettingChanged:   (cb)      => ipcRenderer.on('setting-applied', (_, key, val) => cb(key, val)),
 });
