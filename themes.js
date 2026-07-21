@@ -74,9 +74,9 @@ const CN_THEME_CATEGORIES = {
 // Interface faces offered by the font picker, mirroring Cafe Neurotico's list.
 // `name` is both the CSS family (see the @font-face blocks) and the stored value.
 const CN_FONTS = [
-    { name: 'Raleway',            label: 'Raleway (default)' },
+    { name: 'Raleway',            label: 'Raleway'           },
     { name: 'Poppins',            label: 'Poppins'           },
-    { name: 'Sora',               label: 'Sora'              },
+    { name: 'Sora',               label: 'Sora (default)'    },
     { name: 'Inter',              label: 'Inter'             },
     { name: 'Fraunces',           label: 'Fraunces'          },
     { name: 'Chicago',            label: 'ChicagoFLF'        },

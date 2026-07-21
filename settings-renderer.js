@@ -55,7 +55,7 @@ async function checkWallpapers() {
 
 // ── Interface font ─────────────────────────────────────────────────────────────
 function applyUiFont(name) {
-    const font = CN_FONTS.some(f => f.name === name) ? name : 'Raleway';
+    const font = CN_FONTS.some(f => f.name === name) ? name : 'Sora';
     document.documentElement.style.setProperty('--ui-font', `'${font}', sans-serif`);
     settings.uiFont = font;
     const label = document.getElementById('font-open-name');
@@ -216,6 +216,20 @@ function wireControls() {
     ['modal-themes', 'modal-fonts'].forEach(id => {
         const overlay = document.getElementById(id);
         overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(id); });
+    });
+
+    document.getElementById('btn-install-menu').addEventListener('click', async () => {
+        const btn    = document.getElementById('btn-install-menu');
+        const status = document.getElementById('install-menu-status');
+        btn.disabled = true;
+        btn.textContent = 'Installing…';
+        status.style.color = 'var(--text_dim)';
+        status.textContent = '';
+        const result = await window.api.installToMenu();
+        btn.disabled = false;
+        btn.textContent = 'Add to Application Menu';
+        status.style.color = result.success ? '#66bb6a' : '#ef5350';
+        status.textContent = result.message;
     });
 
     // Escape closes the topmost open picker; only if none is open does it close the window.

@@ -129,7 +129,7 @@ The color theme also affects the Minimalist widget background — each palette t
 Seven faces, all bundled with the AppImage — nothing is fetched at runtime:
 
 ```
-Raleway (default) · Poppins · Sora · Inter · Fraunces · ChicagoFLF · PxPlus IBM VGA8
+Raleway · Poppins · Sora (default) · Inter · Fraunces · ChicagoFLF · PxPlus IBM VGA8
 ```
 
 The picker previews each face in itself. Your choice applies to the clock and the settings window together, and it survives a restart.
@@ -172,6 +172,16 @@ Place it alongside your CNGM installation (e.g. `~/Games/CNGM/`) so it can find 
 
 <br>
 
+### Add to Your Application Menu
+
+Open settings and press **Add to Application Menu**. The Clock writes a launcher to
+`~/.local/share/applications/`, drops its icon into an `icons/` folder beside the AppImage, and
+marks the AppImage executable — after that it appears in your desktop's app list like anything else
+you installed. Same button the rest of the ecosystem uses. Move the AppImage later and just press
+it again.
+
+<br>
+
 ### Building from Source
 
 ```bash
@@ -201,7 +211,7 @@ Open with the **⚙** button (top-right of any clock window).
 | **Image Source** | All · Heroes · Covers · Screenshots · Wallpapers | All | Filters which images appear in the slideshow |
 | **Show Game Name** | Off · On | On | Displays the game title while each image is on screen |
 | **Color Theme** | 58 palettes | CREMA | Opens a picker; live preview — the settings window recolors itself too |
-| **Interface Font** | 7 bundled faces | Raleway | Applies to the clock and the settings window alike |
+| **Interface Font** | 7 bundled faces | Sora | Applies to the clock and the settings window alike |
 
 <br>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'CREMA', showGameName: false, uiFont: 'Raleway' };
+let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'CREMA', showGameName: false, uiFont: 'Sora' };
 let kbImages          = [];
 let kbIndex           = 0;
 let kbActive          = 'a';
@@ -68,7 +68,7 @@ function applyColorTheme(name) {
 
 // ── Interface font ─────────────────────────────────────────────────────────────
 function applyUiFont(name) {
-    const font = CN_FONTS.some(f => f.name === name) ? name : 'Raleway';
+    const font = CN_FONTS.some(f => f.name === name) ? name : 'Sora';
     document.documentElement.style.setProperty('--ui-font', `'${font}', sans-serif`);
     settings.uiFont = font;
 }

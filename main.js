@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs   = require('fs');
+const os   = require('os');
+const { execFile } = require('child_process');
 
 let baseDir = process.env.APPIMAGE ? path.dirname(process.env.APPIMAGE) : __dirname;
 
@@ -14,7 +16,7 @@ const DEFAULTS = {
     alwaysOnTop:  true,
     colorTheme:   'CREMA',
     showGameName: true,
-    uiFont:       'Raleway',
+    uiFont:       'Sora',
 };
 
 const THEME_SIZES = {
@@ -96,6 +98,41 @@ ipcMain.handle('apply-setting-live', (_, key, val) => {
 
     if (win) win.webContents.send('setting-applied', key, val);
 });
+
+// Add a launcher to the XDG application menu, mirroring Cafe Neurotico's install-to-menu.
+function installToMenu() {
+    try {
+        // Icon= cannot point inside the asar, so write a real file next to the AppImage.
+        const iconsDir = path.join(baseDir, 'icons');
+        fs.mkdirSync(iconsDir, { recursive: true });
+        const iconPath = path.join(iconsDir, 'CNClock.svg');
+        fs.writeFileSync(iconPath, fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'CNClock.svg')));
+
+        // Prefer the running AppImage; fall back to one sitting beside us.
+        let exec = process.env.APPIMAGE;
+        if (!exec) {
+            const found = fs.readdirSync(baseDir).find(f => /^CafeNeuroticoClock.*\.AppImage$/i.test(f));
+            exec = found ? path.join(baseDir, found) : null;
+        }
+        if (!exec) return { success: false, message: 'CafeNeuroticoClock.AppImage not found beside the app.' };
+        try { fs.chmodSync(exec, 0o755); } catch {}
+
+        const appsDir = path.join(os.homedir(), '.local', 'share', 'applications');
+        fs.mkdirSync(appsDir, { recursive: true });
+        fs.writeFileSync(path.join(appsDir, 'cafe-neurotico-clock.desktop'),
+            `[Desktop Entry]\nVersion=1.0\nType=Application\nName=CafeNeurotico Clock\n` +
+            `Comment=A desk clock with taste — shows art from CNGM and EmuLatte.\n` +
+            `Exec="${exec}"\nIcon=${iconPath}\nTerminal=false\nCategories=Utility;\n` +
+            `Keywords=clock;time;desktop;widget;cafe neurotico;\nStartupWMClass=cafeneurotico_clock\n`);
+
+        execFile('update-desktop-database', [appsDir], () => {});
+        return { success: true, message: 'Added to your application menu.' };
+    } catch (err) {
+        return { success: false, message: err.message };
+    }
+}
+
+ipcMain.handle('install-to-menu', installToMenu);
 
 ipcMain.on('open-settings-window', () => {
     if (settingsWin) { settingsWin.focus(); return; }

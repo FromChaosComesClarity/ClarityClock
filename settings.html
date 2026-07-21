@@ -11,14 +11,14 @@
   @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Regular.ttf') format('truetype'); font-weight: 400; }
   @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Bold.ttf')    format('truetype'); font-weight: 700; }
   @font-face { font-family: 'Poppins'; src: url('assets/fonts/Poppins-Black.ttf')   format('truetype'); font-weight: 900; }
-  @font-face { font-family: 'Sora';             src: url('assets/fonts/Sora.ttf')            format('truetype'); }
-  @font-face { font-family: 'Inter';            src: url('assets/fonts/Inter.ttf')           format('truetype'); }
-  @font-face { font-family: 'Fraunces';         src: url('assets/fonts/Fraunces.ttf')        format('truetype'); }
+  @font-face { font-family: 'Sora';             src: url('assets/fonts/Sora.ttf')            format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'Inter';            src: url('assets/fonts/Inter.ttf')           format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'Fraunces';         src: url('assets/fonts/Fraunces.ttf')        format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'Chicago';          src: url('assets/fonts/ChicagoFLF.ttf')      format('truetype'); }
   @font-face { font-family: 'PxPlus IBM VGA8';  src: url('assets/fonts/PxPlusIBMVGA8.ttf')   format('truetype'); }
 
   :root {
-    --ui-font:      'Raleway', sans-serif;
+    --ui-font:      'Sora', sans-serif;
     --bg:           #2C1E16;
     --bg_panel:     rgba(67,40,24,0.6);
     --bg_menu:      #432818;
@@ -350,6 +350,16 @@
   .font-card-name   { font-size: 15px; font-weight: 700; }
   .font-card-sample { font-size: 11px; opacity: 0.75; margin-left: auto; white-space: nowrap; }
 
+  /* ── Install-to-menu status ──────────────────────────────────────────────── */
+  #install-menu-status {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
+    color: var(--text_dim);
+    min-height: 12px;
+  }
+
   /* ── About ───────────────────────────────────────────────────────────────── */
   #about {
     border: 1px solid var(--border_solid);
@@ -472,9 +482,15 @@
 
     <div class="s-section-label">Interface Font</div>
     <button class="s-trigger" id="btn-font-open">
-      <span id="font-open-name">Raleway</span>
+      <span id="font-open-name">Sora</span>
       <span class="chev">▶</span>
     </button>
+
+    <div class="s-divider"></div>
+
+    <div class="s-section-label">Desktop</div>
+    <button class="s-btn" id="btn-install-menu" style="flex:none;">Add to Application Menu</button>
+    <div id="install-menu-status"></div>
 
     <div class="s-divider"></div>
 
