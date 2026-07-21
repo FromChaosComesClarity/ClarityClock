@@ -28,7 +28,7 @@
 
 ## ◈ &nbsp; What It Is
 
-A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **CNGM** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Cafe Neurotico ecosystem — 58 color palettes, warm typography, no decorations that weren't earned.
+A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **CNGM** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Cafe Neurotico ecosystem — 93 color palettes, warm typography, no decorations that weren't earned.
 
 It's small enough to tuck into a corner. Beautiful enough to leave in the middle of your screen.
 
@@ -102,21 +102,26 @@ All windows are **freely resizable** — the clock text scales proportionally wi
 
 ## ◈ &nbsp; Color Themes
 
-**58 palettes** organized across 7 categories. Applied live — no restart.
+**93 palettes** organized across 10 categories — full parity with Cafe Neurotico. Applied live — no restart.
 
 The picker opens as a card grid — every palette previewed in its own colors, filterable by category.
 
 | Category | Themes |
 |:---|:---|
-| **Originals & System** | DARK GRAY · CREMA · CYBERPUNK · SNOW · MOVIESFLIX · VAPOUR OS · PSIV BLUE · GREEN BOX · WIN XP |
+| **Originals & System** | DARK GRAY · CREMA · CYBERPUNK · SNOW · MOVIESFLIX · VAPOUR OS · PSIV BLUE · GREEN BOX · OAKANIZER DARK · WIN XP |
+| **BrewBalance** | BREWBALANCE DARK · BREWBALANCE LIGHT · MOCHA · FLAT WHITE · MATCHA |
+| **Light & Minimal** | PAPER · SOLARIZED LIGHT · CATPPUCCIN LATTE · GITHUB LIGHT · GRUVBOX LIGHT · ROSÉ PINE DAWN · NORD LIGHT · DAYBREAK · OAKANIZER LIGHT |
 | **Gaming Legends** | GAME BOY DMG · PIP BOY · SEVASTOPOL · RIP AND TEAR CLASSIC · SUPER BROTHERS · GREEN HILL · NES · SNES · BLOODBORNE · METROID PRIME · SILENT HILL · DIABLO · HALF-LIFE · SHOVEL KNIGHT |
 | **Aesthetics** | EARTHY & ORGANIC · DOPAMINE BRIGHTS · RETRO REVIVAL · VAPORWAVE · AURORA · NOIR · BIOLUMINESCENCE · BRUTALIST |
-| **Linux Ricing** | DRACULA · GRUVBOX · NORD · SOLARIZED DARK · CATPPUCCIN (3 flavors) · TOKYO NIGHT · EVERFOREST · ROSÉ PINE · OXOCARBON · MATERIAL DARK |
+| **Linux Ricing** | DRACULA · GRUVBOX · NORD · SOLARIZED DARK · CATPPUCCIN FRAPPÉ · CATPPUCCIN MACCHIATO · CATPPUCCIN MOCHA · TOKYO NIGHT · EVERFOREST · ROSÉ PINE · OXOCARBON · MATERIAL DARK |
 | **Sci-Fi Universes** | N7 · TRON LEGACY · DEAD SPACE · COLONY SHIP · NECROMORPH |
 | **Horror Realm** | CRIMSON PEAK · LAKESIDE CURSE · THE BACKROOMS |
-| **PSIII Colors** | CLASSIC · RED · GREEN · BLUE · PURPLE · GOLD · SILVER |
+| **PSIII Colors** | PSIII CLASSIC · PSIII RED · PSIII GREEN · PSIII BLUE · PSIII PURPLE · PSIII GOLD · PSIII SILVER |
+| **Systems** | MS-DOS · COMMODORE 64 · MACOS 1.0 · CLASSIC MACOS · WINDOWS 95 · AMIGA WORKBENCH · WINDOWS XP · BEOS · NEXTSTEP · ZX SPECTRUM · ATARI ST · AMBER CRT · GREEN CRT · TELETEXT · WINDOWS 3.1 · OS/2 WARP · IBM 3270 · SOLARIS CDE · RISC OS · GEOS |
 
 The color theme also affects the Minimalist widget background — each palette tints the transparency to match its own `bg` color.
+
+The 20 **Systems** palettes each carry their own era typeface — MS-DOS brings PxPlus IBM VGA8, Commodore 64 brings C64 Pro Mono, and so on. While one of those is selected it overrides your interface font; the picker says so, and your choice returns when you leave the palette.
 
 <br>
 
@@ -210,7 +215,7 @@ Open with the **⚙** button (top-right of any clock window).
 | **Art Slideshow** | Off · On | On | Enables the KB background on Minimalist and CREMA themes |
 | **Image Source** | All · Heroes · Covers · Screenshots · Wallpapers | All | Filters which images appear in the slideshow |
 | **Show Game Name** | Off · On | On | Displays the game title while each image is on screen |
-| **Color Theme** | 58 palettes | CREMA | Opens a picker; live preview — the settings window recolors itself too |
+| **Color Theme** | 93 palettes | CREMA | Opens a picker; live preview — the settings window recolors itself too |
 | **Interface Font** | 7 bundled faces | Sora | Applies to the clock and the settings window alike |
 
 <br>

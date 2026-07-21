@@ -26,7 +26,10 @@ function applyColorTheme(name) {
     const t = CN_THEMES[name];
     if (!t) return;
     const root = document.documentElement;
-    Object.entries(t).forEach(([k, v]) => root.style.setProperty(`--${k}`, v));
+    // `font` is not a colour token — the Systems palettes carry their era typeface here.
+    Object.entries(t).forEach(([k, v]) => { if (k !== 'font') root.style.setProperty(`--${k}`, v); });
+    settings.colorTheme = name;
+    applyUiFont(settings.uiFont);   // re-resolve: an era font wins while its palette is active
 }
 
 // ── Sync button states ─────────────────────────────────────────────────────────
@@ -54,14 +57,26 @@ async function checkWallpapers() {
 }
 
 // ── Interface font ─────────────────────────────────────────────────────────────
+// The picker's choice is what gets stored; a Systems palette's era face overrides it
+// on screen for as long as that palette is selected.
 function applyUiFont(name) {
-    const font = CN_FONTS.some(f => f.name === name) ? name : 'Sora';
-    document.documentElement.style.setProperty('--ui-font', `'${font}', sans-serif`);
+    const font      = CN_FONTS.some(f => f.name === name) ? name : 'Sora';
+    const themeFont = (CN_THEMES[settings.colorTheme] || {}).font;
+    document.documentElement.style.setProperty('--ui-font', `'${themeFont || font}', sans-serif`);
     settings.uiFont = font;
+
     const label = document.getElementById('font-open-name');
     if (label) {
-        label.textContent = font;
-        label.style.fontFamily = `'${font}', sans-serif`;   // trigger previews the choice
+        label.textContent = font;                          // the stored choice, not the override
+        label.style.fontFamily = `'${font}', sans-serif`;  // trigger previews the choice
+    }
+    // Say so plainly, otherwise the picker looks broken while a Systems palette is on.
+    const note = document.getElementById('font-theme-note');
+    if (note) {
+        note.textContent = themeFont
+            ? `${settings.colorTheme} is a Systems palette — it overrides this with ${themeFont} while selected.`
+            : '';
+        note.style.display = themeFont ? 'block' : 'none';
     }
 }
 
