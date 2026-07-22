@@ -257,7 +257,10 @@
   #kb-game-label {
     position: absolute;
     bottom: 18px; left: 18px;
-    z-index: 5;
+    /* Above #clock-face (z-index 10). It lives outside #kb-layer for exactly this reason:
+       inside that z-index:0 layer it was trapped below the full-window clock-face, which
+       has no pointer-events:none and therefore swallowed every click on the label. */
+    z-index: 20;
     display: none;
     background: rgba(0,0,0,0.52);
     backdrop-filter: blur(8px);
@@ -296,8 +299,10 @@
     <img class="kb-img" id="kb-img-a" src="" alt="">
     <img class="kb-img" id="kb-img-b" src="" alt="">
     <div id="kb-overlay"></div>
-    <div id="kb-game-label"><span id="kb-game-name"></span></div>
   </div>
+
+  <!-- Sibling of #clock-face (not inside #kb-layer) so it stacks above it and stays clickable. -->
+  <div id="kb-game-label"><span id="kb-game-name"></span></div>
 
   <!-- ── Clock face ───────────────────────────────────────────────────────── -->
   <div id="clock-face">
