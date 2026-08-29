@@ -12,11 +12,11 @@
 
 <br>
 
-[![Version 1.0](https://img.shields.io/badge/Version-1.0-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/shampoo-is-a-lie/CafeNeuroticoClock/releases/latest)
+[![Version 1.0](https://img.shields.io/badge/Version-1.0-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/FromChaosComesClarity/CafeNeuroticoClock/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-8B5A2B?style=flat-square&labelColor=2C1E16)](LICENSE)
-[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/shampoo-is-a-lie)
+[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/FromChaosComesClarity)
 [![Built with Electron](https://img.shields.io/badge/Built%20with-Electron%2041-A47148?style=flat-square&labelColor=2C1E16)](https://electronjs.org)
-[![Part of CN Ecosystem](https://img.shields.io/badge/Part%20of-Cafe%20Neurotico-D4A373?style=flat-square&labelColor=432818)](https://github.com/shampoo-is-a-lie)
+[![Part of CN Ecosystem](https://img.shields.io/badge/Part%20of-Cafe%20Neurotico-D4A373?style=flat-square&labelColor=432818)](https://github.com/FromChaosComesClarity)
 
 </div>
 
@@ -192,7 +192,7 @@ it again.
 ### Building from Source
 
 ```bash
-git clone https://github.com/shampoo-is-a-lie/CafeNeuroticoClock
+git clone https://github.com/FromChaosComesClarity/CafeNeuroticoClock
 cd CafeNeuroticoClock
 npm install
 npm start          # run in development
