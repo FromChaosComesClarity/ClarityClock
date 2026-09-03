@@ -41,9 +41,9 @@ It only ever writes one file — `GameManagerConfig/ClarityClock/settings.json`.
 
 [**EmuLatte**](https://github.com/shampoo-is-a-lie/EmuLatte) — the standalone emulation library, also a source of art and a click-through target.
 
-## Tip the barista
+## Spread the good vibes
 
-If this earned a spot on your desktop, consider buying me a coffee. *"more caffeine is `more good`."*
+If this earned a spot on your desktop, consider sending a little support my way. *"stay positive and love your life."*
 
 - **Ko-fi (Intl):** https://ko-fi.com/clarity
 - **PIX (Brazil):** `b734a9e2-e479-42f9-abd6-c88d1b8b880e`
