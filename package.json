@@ -1,12 +1,12 @@
 {
-  "name": "cafeneurotico_clock",
+  "name": "clarity_clock",
   "version": "1.0.1",
-  "description": "Cafe Neurotico Clock by Cafe Neurotico",
+  "description": "Clarity Clock by Clarity",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder --linux AppImage",
-    "postdist": "D=/home/jose/Games/CNGM; F=CafeNeuroticoClock.AppImage; [ -f $D/$F ] && mv $D/$F $D/CafeNeuroticoClock_old.AppImage; cp dist/$F $D/$F && echo \"Deployed $F to $D\""
+    "postdist": "D=/home/jose/Games/Clarity; F=ClarityClock.AppImage; [ -f $D/$F ] && mv $D/$F $D/ClarityClock_old.AppImage; cp dist/$F $D/$F && echo \"Deployed $F to $D\""
   },
   "author": "Shampoo is a Lie",
   "license": "GPL-3.0",
@@ -15,15 +15,15 @@
     "electron-builder": "^26.8.1"
   },
   "build": {
-    "appId": "com.cafeneurotico.clock",
-    "productName": "CafeNeuroticoClock",
+    "appId": "io.github.fromchaoscomesclarity.clarityclock",
+    "productName": "Clarity Clock",
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icons/CNClock.svg",
+      "icon": "assets/icons/ClarityClock.svg",
       "category": "Utility"
     },
     "appImage": {
-      "artifactName": "CafeNeuroticoClock.AppImage"
+      "artifactName": "ClarityClock.AppImage"
     },
     "files": [
       "main.js",

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/icons/CNClock.svg" width="128" alt="Cafe Neurotico Clock"/>
+<img src="assets/icons/ClarityClock.svg" width="128" alt="Clarity Clock"/>
 
 <br>
 
@@ -12,7 +12,7 @@
 
 <br>
 
-[![Version 1.0](https://img.shields.io/badge/Version-1.0-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/FromChaosComesClarity/CafeNeuroticoClock/releases/latest)
+[![Version 1.0](https://img.shields.io/badge/Version-1.0-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/FromChaosComesClarity/ClarityClock/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-8B5A2B?style=flat-square&labelColor=2C1E16)](LICENSE)
 [![Platform: Linux](https://img.shields.io/badge/Platform-Linux-D4A373?style=flat-square&labelColor=2C1E16)](https://github.com/FromChaosComesClarity)
 [![Built with Electron](https://img.shields.io/badge/Built%20with-Electron%2041-A47148?style=flat-square&labelColor=2C1E16)](https://electronjs.org)
@@ -28,7 +28,7 @@
 
 ## ◈ &nbsp; What It Is
 
-A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **CNGM** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Cafe Neurotico ecosystem — 93 color palettes, warm typography, no decorations that weren't earned.
+A lightweight, frameless clock widget that lives on your Linux desktop. It pulls game art directly from your **Clarity** and **EmuLatte** libraries to run as a Ken Burns slideshow backdrop, and it speaks the same visual language as the rest of the Clarity ecosystem — 93 color palettes, warm typography, no decorations that weren't earned.
 
 It's small enough to tuck into a corner. Beautiful enough to leave in the middle of your screen.
 
@@ -42,20 +42,20 @@ It's small enough to tuck into a corner. Beautiful enough to leave in the middle
 
 > **Run as many clocks as you want, simultaneously.**
 
-Launch the AppImage multiple times — each running instance is independent. Give each one a different visual theme, a different color palette, a different size. Park one in a corner of your main monitor showing the time in **Minimalist** mode. Open another on your secondary screen in **Ken Burns** mode cycling through game art. Stack a third in CREMA Splash if you just want something large and atmospheric.
+Launch the AppImage multiple times — each running instance is independent. Give each one a different visual theme, a different color palette, a different size. Park one in a corner of your main monitor showing the time in **Minimalist** mode. Open another on your secondary screen in **Ken Burns** mode cycling through game art. Stack a third in Couch Mode Splash if you just want something large and atmospheric.
 
 No configuration needed. Just launch it again.
 
 ```bash
-./CafeNeuroticoClock.AppImage &
-./CafeNeuroticoClock.AppImage &
-./CafeNeuroticoClock.AppImage &
+./ClarityClock.AppImage &
+./ClarityClock.AppImage &
+./ClarityClock.AppImage &
 ```
 
 Each instance has its own settings window, and changing a setting in one never disturbs the others while they're running.
 
 > **One saved configuration, shared.** All instances read and write the same
-> `GameManagerConfig/CafeNeuroticoClock/settings.json`. Your per-window arrangement lives only for
+> `GameManagerConfig/ClarityClock/settings.json`. Your per-window arrangement lives only for
 > as long as those windows do — the next launch starts every clock from whichever settings were
 > written last. Arrange them freely at runtime; just don't expect the arrangement to survive a
 > restart.
@@ -79,7 +79,7 @@ Three distinct presentations — each resizable, each adapting to your chosen co
 │               theme. Stays out of your way.             │
 │               400 × 160  (default)                      │
 ├─────────────────────────────────────────────────────────┤
-│  CREMA        Full-window dark splash. A large frosted  │
+│  Couch Mode        Full-window dark splash. A large frosted  │
 │  SPLASH  ★   glass circle frames the clock, blurring   │
 │               the art behind it. 700 × 700  (default)   │
 ├─────────────────────────────────────────────────────────┤
@@ -102,13 +102,13 @@ All windows are **freely resizable** — the clock text scales proportionally wi
 
 ## ◈ &nbsp; Color Themes
 
-**93 palettes** organized across 10 categories — full parity with Cafe Neurotico. Applied live — no restart.
+**93 palettes** organized across 10 categories — full parity with Clarity. Applied live — no restart.
 
 The picker opens as a card grid — every palette previewed in its own colors, filterable by category.
 
 | Category | Themes |
 |:---|:---|
-| **Originals & System** | DARK GRAY · CREMA · CYBERPUNK · SNOW · MOVIESFLIX · VAPOUR OS · PSIV BLUE · GREEN BOX · OAKANIZER DARK · WIN XP |
+| **Originals & System** | DARK GRAY · Couch Mode · CYBERPUNK · SNOW · MOVIESFLIX · VAPOUR OS · PSIV BLUE · GREEN BOX · OAKANIZER DARK · WIN XP |
 | **BrewBalance** | BREWBALANCE DARK · BREWBALANCE LIGHT · MOCHA · FLAT WHITE · MATCHA |
 | **Light & Minimal** | PAPER · SOLARIZED LIGHT · CATPPUCCIN LATTE · GITHUB LIGHT · GRUVBOX LIGHT · ROSÉ PINE DAWN · NORD LIGHT · DAYBREAK · OAKANIZER LIGHT |
 | **Gaming Legends** | GAME BOY DMG · PIP BOY · SEVASTOPOL · RIP AND TEAR CLASSIC · SUPER BROTHERS · GREEN HILL · NES · SNES · BLOODBORNE · METROID PRIME · SILENT HILL · DIABLO · HALF-LIFE · SHOVEL KNIGHT |
@@ -149,7 +149,7 @@ The picker previews each face in itself. Your choice applies to the clock and th
 
 When the Ken Burns effect is enabled, the clock reads images from:
 
-- `GameManagerConfig/images/` — CNGM game art (heroes, covers, screenshots)
+- `GameManagerConfig/images/` — Clarity game art (heroes, covers, screenshots)
 - `GameManagerConfig/EmuLatte/images/` — EmuLatte art, organized by platform
 - `GameManagerConfig/wallpapers/` — your own wallpapers, dropped here alongside the AppImage
 
@@ -157,7 +157,7 @@ Images are classified by filename and directory. You can narrow the source to a 
 
 Enable **Show Game Name** in settings to display a label with the game title while each image is shown.
 
-**Click that label to open the game where it lives** — CNGM art opens Cafe Neurotico at that game's page, EmuLatte art opens EmuLatte at its own. This needs the sibling AppImage sitting in the same folder as the clock. Art whose game has since been renamed or removed still opens the app, just at the library.
+**Click that label to open the game where it lives** — Clarity art opens Clarity at that game's page, EmuLatte art opens EmuLatte at its own. This needs the sibling AppImage sitting in the same folder as the clock. Art whose game has since been renamed or removed still opens the app, just at the library.
 
 <br>
 
@@ -170,12 +170,12 @@ Enable **Show Game Name** in settings to display a label with the game title whi
 ### From a Release
 
 ```bash
-# Download CafeNeuroticoClock.AppImage from the Releases page, then:
-chmod +x CafeNeuroticoClock.AppImage
-./CafeNeuroticoClock.AppImage
+# Download ClarityClock.AppImage from the Releases page, then:
+chmod +x ClarityClock.AppImage
+./ClarityClock.AppImage
 ```
 
-Place it alongside your CNGM installation (e.g. `~/Games/CNGM/`) so it can find the game art automatically.
+Place it alongside your Clarity installation (e.g. `~/Games/Clarity/`) so it can find the game art automatically.
 
 <br>
 
@@ -192,14 +192,14 @@ it again.
 ### Building from Source
 
 ```bash
-git clone https://github.com/FromChaosComesClarity/CafeNeuroticoClock
-cd CafeNeuroticoClock
+git clone https://github.com/FromChaosComesClarity/ClarityClock
+cd ClarityClock
 npm install
 npm start          # run in development
-npm run dist       # build AppImage and deploy to ~/Games/CNGM/
+npm run dist       # build AppImage and deploy to ~/Games/Clarity/
 ```
 
-The `postdist` script deploys the AppImage to `~/Games/CNGM/` automatically.
+The `postdist` script deploys the AppImage to `~/Games/Clarity/` automatically.
 
 <br>
 
@@ -213,11 +213,11 @@ Open with the **⚙** button (top-right of any clock window).
 
 | Setting | Options | Default | Description |
 |:---|:---|:---|:---|
-| **Visual Theme** | Minimalist · CREMA Splash · Ken Burns | CREMA Splash | Changes window layout and size |
-| **Art Slideshow** | Off · On | On | Enables the KB background on Minimalist and CREMA themes |
+| **Visual Theme** | Minimalist · Couch Mode Splash · Ken Burns | Couch Mode Splash | Changes window layout and size |
+| **Art Slideshow** | Off · On | On | Enables the KB background on Minimalist and Couch Mode themes |
 | **Image Source** | All · Heroes · Covers · Screenshots · Wallpapers | All | Filters which images appear in the slideshow |
 | **Show Game Name** | Off · On | On | Displays the game title while each image is on screen |
-| **Color Theme** | 93 palettes | CREMA | Opens a picker; live preview — the settings window recolors itself too |
+| **Color Theme** | 93 palettes | Couch Mode | Opens a picker; live preview — the settings window recolors itself too |
 | **Interface Font** | 7 bundled faces | Sora | Applies to the clock and the settings window alike |
 
 <br>
@@ -240,7 +240,7 @@ The interface is **English only**. There are perhaps thirty user-facing strings 
 
 No network access, no telemetry, no accounts, no runtime dependencies. Fonts are bundled with the AppImage rather than fetched.
 
-The only file the clock ever **writes** is its own `settings.json`. It **reads** two databases, strictly read-only and only to turn an art filename back into a game title: CNGM's `games.db` and EmuLatte's `emulatte.db`. Neither has to exist — without them the clock still runs, it just shows no game names.
+The only file the clock ever **writes** is its own `settings.json`. It **reads** two databases, strictly read-only and only to turn an art filename back into a game title: Clarity's `games.db` and EmuLatte's `emulatte.db`. Neither has to exist — without them the clock still runs, it just shows no game names.
 
 <br>
 
@@ -248,21 +248,21 @@ The only file the clock ever **writes** is its own `settings.json`. It **reads**
 
 <br>
 
-## ◈ &nbsp; The Cafe Neurotico Ecosystem
+## ◈ &nbsp; The Clarity Ecosystem
 
 ```
-  CNGM           Central hub — PC game library, store sync, launches all companion apps
+  Clarity           Central hub — PC game library, store sync, launches all companion apps
     │
-    ├──▸  CREMA       Fullscreen / gamepad counterpart for CNGM + EmuLatte
+    ├──▸  Couch Mode       Fullscreen / gamepad counterpart for Clarity + EmuLatte
     │
-    ├──▸  GRINDER     GOG & Epic install engine — feeds games back into CNGM
+    ├──▸  Installer     GOG & Epic install engine — feeds games back into Clarity
     │
-    ├──▸  EmuLatte    ROM library manager — emulation counterpart to CNGM
+    ├──▸  EmuLatte    ROM library manager — emulation counterpart to Clarity
     │
-    └──▸  CN Clock ◈  Floating desktop clock — shows art from CNGM + EmuLatte
+    └──▸  CN Clock ◈  Floating desktop clock — shows art from Clarity + EmuLatte
 ```
 
-CN Clock reads game art from wherever CNGM and EmuLatte store it — no extra setup if you're already in the ecosystem.
+CN Clock reads game art from wherever Clarity and EmuLatte store it — no extra setup if you're already in the ecosystem.
 
 <br>
 

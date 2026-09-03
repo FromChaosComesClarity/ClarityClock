@@ -1,6 +1,6 @@
 'use strict';
 
-let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'CREMA', showGameName: false, uiFont: 'Sora' };
+let settings          = { theme: 'minimalist', kenBurns: false, imageSource: 'all', alwaysOnTop: true, colorTheme: 'Couch Mode', showGameName: false, uiFont: 'Sora' };
 let kbImages          = [];
 let kbIndex           = 0;
 let kbActive          = 'a';
@@ -8,12 +8,12 @@ let kbTimer           = null;
 let _labelHideHandler = null;
 
 const KB_INTERVAL = 12000;
-const BASE_W = { minimalist: 400, crema: 700, kenburns: 900 };
+const BASE_W = { minimalist: 400, couch: 700, kenburns: 900 };
 
 // ── Boot ───────────────────────────────────────────────────────────────────────
 async function init() {
     settings = await window.api.loadSettings();
-    applyColorTheme(settings.colorTheme || 'CREMA');
+    applyColorTheme(settings.colorTheme || 'Couch Mode');
     applyUiFont(settings.uiFont);
     // applyTheme already scans and starts the slideshow when the theme needs it.
     // Repeating that here walked the whole art library a second time on every launch.
@@ -82,7 +82,7 @@ function applyUiFont(name) {
 // ── Visual theme ───────────────────────────────────────────────────────────────
 function applyTheme(theme) {
     const app = document.getElementById('app');
-    app.classList.remove('theme-minimalist', 'theme-crema', 'theme-kenburns');
+    app.classList.remove('theme-minimalist', 'theme-couch', 'theme-kenburns');
     app.classList.add(`theme-${theme}`);
     settings.theme = theme;
     updateClockScale();
@@ -109,7 +109,7 @@ function showGameLabel(name, app, gameId) {
     // Remembered here so a click always refers to the image currently on screen.
     el.dataset.app    = app || '';
     el.dataset.gameId = gameId == null ? '' : String(gameId);
-    el.title = app === 'emulatte' ? `Open ${name} in EmuLatte` : `Open ${name} in Cafe Neurotico`;
+    el.title = app === 'emulatte' ? `Open ${name} in EmuLatte` : `Open ${name} in Clarity`;
     // Cancel any in-flight hide transition so it can't overwrite display:block below.
     if (_labelHideHandler) {
         el.removeEventListener('transitionend', _labelHideHandler);
