@@ -3,7 +3,7 @@
 const CN_THEMES = {
     // ── Originals & System ────────────────────────────────────────────
     "DARK GRAY":           {bg:"#141414",bg_panel:"rgba(0,0,0,0.5)",bg_menu:"#222222",accent:"#ffffff",accent_menu:"#00e5ff",text_main:"#ffffff",text_sec:"#bbbbbb",text_dim:"#777777",border:"rgba(255,255,255,0.1)",border_solid:"#555555"},
-    "CREMA":               {bg:"#2C1E16",bg_panel:"rgba(67, 40, 24, 0.6)",bg_menu:"#432818",accent:"#D4A373",accent_menu:"#D4A373",text_main:"#FFE6A7",text_sec:"#E6CC98",text_dim:"#A47148",border:"rgba(212, 163, 115, 0.2)",border_solid:"#8B5A2B"},
+    "Couch Mode":               {bg:"#2C1E16",bg_panel:"rgba(67, 40, 24, 0.6)",bg_menu:"#432818",accent:"#D4A373",accent_menu:"#D4A373",text_main:"#FFE6A7",text_sec:"#E6CC98",text_dim:"#A47148",border:"rgba(212, 163, 115, 0.2)",border_solid:"#8B5A2B"},
     "CYBERPUNK":           {bg:"#09090b",bg_panel:"rgba(26, 26, 46, 0.7)",bg_menu:"#1a1a2e",accent:"#f3e600",accent_menu:"#00ffcc",text_main:"#00ffcc",text_sec:"#e0e0e0",text_dim:"#ff003c",border:"rgba(243, 230, 0, 0.2)",border_solid:"#ff003c"},
     "SNOW":                {bg:"#0a1628",bg_panel:"rgba(32, 68, 110, 0.65)",bg_menu:"#0f2040",accent:"#93d0f0",accent_menu:"#b8e4f8",text_main:"#e8f4ff",text_sec:"#8bbbd8",text_dim:"#4a7898",border:"rgba(147, 208, 240, 0.18)",border_solid:"#1c4060"},
     "MOVIESFLIX":          {bg:"#141414",bg_panel:"rgba(255, 255, 255, 0.07)",bg_menu:"#000000",accent:"#e50914",accent_menu:"#e50914",text_main:"#ffffff",text_sec:"#b3b3b3",text_dim:"#6d6d6d",border:"rgba(229, 9, 20, 0.30)",border_solid:"#404040"},
@@ -107,7 +107,7 @@ const CN_THEMES = {
 };
 
 const CN_THEME_CATEGORIES = {
-    "Originals & System": ["DARK GRAY","CREMA","CYBERPUNK","SNOW","MOVIESFLIX","VAPOUR OS","PSIV BLUE","GREEN BOX","OAKANIZER DARK","WIN XP"],
+    "Originals & System": ["DARK GRAY","Couch Mode","CYBERPUNK","SNOW","MOVIESFLIX","VAPOUR OS","PSIV BLUE","GREEN BOX","OAKANIZER DARK","WIN XP"],
     "BrewBalance":        ["BREWBALANCE DARK","BREWBALANCE LIGHT","MOCHA","FLAT WHITE","MATCHA"],
     "Light & Minimal":    ["PAPER","SOLARIZED LIGHT","CATPPUCCIN LATTE","GITHUB LIGHT","GRUVBOX LIGHT","ROSÉ PINE DAWN","NORD LIGHT","DAYBREAK","OAKANIZER LIGHT"],
     "Gaming Legends":     ["GAME BOY DMG","PIP BOY","SEVASTOPOL","RIP AND TEAR CLASSIC","SUPER BROTHERS","GREEN HILL","NES","SNES","BLOODBORNE","METROID PRIME","SILENT HILL","DIABLO","HALF-LIFE","SHOVEL KNIGHT"],
@@ -119,7 +119,7 @@ const CN_THEME_CATEGORIES = {
     "Systems":            ["MS-DOS","COMMODORE 64","MACOS 1.0","CLASSIC MACOS","WINDOWS 95","AMIGA WORKBENCH","WINDOWS XP","BEOS","NEXTSTEP","ZX SPECTRUM","ATARI ST","AMBER CRT","GREEN CRT","TELETEXT","WINDOWS 3.1","OS/2 WARP","IBM 3270","SOLARIS CDE","RISC OS","GEOS"],
 };
 
-// Interface faces offered by the font picker, mirroring Cafe Neurotico's list.
+// Interface faces offered by the font picker, mirroring Clarity's list.
 // `name` is both the CSS family (see the @font-face blocks) and the stored value.
 const CN_FONTS = [
     { name: 'Raleway',            label: 'Raleway'           },

@@ -6,22 +6,22 @@ const { execFile, spawn } = require('child_process');
 
 let baseDir = process.env.APPIMAGE ? path.dirname(process.env.APPIMAGE) : __dirname;
 
-const settingsDir  = path.join(baseDir, 'GameManagerConfig', 'CafeNeuroticoClock');
+const settingsDir  = path.join(baseDir, 'GameManagerConfig', 'ClarityClock');
 const settingsFile = path.join(settingsDir, 'settings.json');
 
 const DEFAULTS = {
-    theme:        'crema',
+    theme:        'couch',
     kenBurns:     true,
     imageSource:  'all',
     alwaysOnTop:  true,
-    colorTheme:   'CREMA',
+    colorTheme:   'Couch Mode',
     showGameName: true,
     uiFont:       'Sora',
 };
 
 const THEME_SIZES = {
     minimalist: { w: 400,  h: 160 },
-    crema:      { w: 700,  h: 700 },
+    couch:      { w: 700,  h: 700 },
     kenburns:   { w: 900,  h: 560 },
 };
 
@@ -99,31 +99,31 @@ ipcMain.handle('apply-setting-live', (_, key, val) => {
     if (win) win.webContents.send('setting-applied', key, val);
 });
 
-// Add a launcher to the XDG application menu, mirroring Cafe Neurotico's install-to-menu.
+// Add a launcher to the XDG application menu, mirroring Clarity's install-to-menu.
 function installToMenu() {
     try {
         // Icon= cannot point inside the asar, so write a real file next to the AppImage.
         const iconsDir = path.join(baseDir, 'icons');
         fs.mkdirSync(iconsDir, { recursive: true });
-        const iconPath = path.join(iconsDir, 'CNClock.svg');
-        fs.writeFileSync(iconPath, fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'CNClock.svg')));
+        const iconPath = path.join(iconsDir, 'ClarityClock.svg');
+        fs.writeFileSync(iconPath, fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'ClarityClock.svg')));
 
         // Prefer the running AppImage; fall back to one sitting beside us.
         let exec = process.env.APPIMAGE;
         if (!exec) {
-            const found = fs.readdirSync(baseDir).find(f => /^CafeNeuroticoClock.*\.AppImage$/i.test(f));
+            const found = fs.readdirSync(baseDir).find(f => /^ClarityClock.*\.AppImage$/i.test(f));
             exec = found ? path.join(baseDir, found) : null;
         }
-        if (!exec) return { success: false, message: 'CafeNeuroticoClock.AppImage not found beside the app.' };
+        if (!exec) return { success: false, message: 'ClarityClock.AppImage not found beside the app.' };
         try { fs.chmodSync(exec, 0o755); } catch {}
 
         const appsDir = path.join(os.homedir(), '.local', 'share', 'applications');
         fs.mkdirSync(appsDir, { recursive: true });
-        fs.writeFileSync(path.join(appsDir, 'cafe-neurotico-clock.desktop'),
-            `[Desktop Entry]\nVersion=1.0\nType=Application\nName=CafeNeurotico Clock\n` +
-            `Comment=A desk clock with taste — shows art from CNGM and EmuLatte.\n` +
+        fs.writeFileSync(path.join(appsDir, 'clarity-clock.desktop'),
+            `[Desktop Entry]\nVersion=1.0\nType=Application\nName=Clarity Clock\n` +
+            `Comment=A desk clock with taste — shows art from Clarity and EmuLatte.\n` +
             `Exec="${exec}"\nIcon=${iconPath}\nTerminal=false\nCategories=Utility;\n` +
-            `Keywords=clock;time;desktop;widget;cafe neurotico;\nStartupWMClass=cafeneurotico_clock\n`);
+            `Keywords=clock;time;desktop;widget;clarity;\nStartupWMClass=clarity_clock\n`);
 
         execFile('update-desktop-database', [appsDir], () => {});
         return { success: true, message: 'Added to your application menu.' };
@@ -165,7 +165,7 @@ ipcMain.on('settings-win-close', () => settingsWin?.close());
 ipcMain.on('win-minimize', () => win?.minimize());
 ipcMain.on('win-close',    () => win?.close());
 
-// Convert any absolute path to a safe file:// URL (mirrors CREMA's convertSafePath).
+// Convert any absolute path to a safe file:// URL (mirrors Couch Mode's convertSafePath).
 // Electron can serve asar-bundled files only when addressed via file://.
 function toFileUrl(p) {
     const normalized = p.replace(/\\/g, '/');
@@ -177,10 +177,10 @@ function toFileUrl(p) {
 // single-instance lock, so a second launch is forwarded to the running window rather
 // than starting a rival copy. Requires the sibling AppImage to sit beside ours.
 ipcMain.handle('open-game', (_, app_, id) => {
-    const pattern = app_ === 'emulatte' ? /^EmuLatte.*\.AppImage$/i : /^CafeNeurotico(?!Clock).*\.AppImage$/i;
+    const pattern = app_ === 'emulatte' ? /^EmuLatte.*\.AppImage$/i : /^Clarity(?!Clock).*\.AppImage$/i;
     let file;
     try { file = fs.readdirSync(baseDir).find(f => pattern.test(f)); } catch {}
-    if (!file) return { success: false, message: `${app_ === 'emulatte' ? 'EmuLatte' : 'CafeNeurotico'} not found beside the clock.` };
+    if (!file) return { success: false, message: `${app_ === 'emulatte' ? 'EmuLatte' : 'Clarity'} not found beside the clock.` };
 
     const target = path.join(baseDir, file);
     try { fs.chmodSync(target, 0o755); } catch {}
@@ -195,21 +195,21 @@ ipcMain.handle('open-game', (_, app_, id) => {
 
 // ── Resolving art back to a game ──────────────────────────────────────────────
 // Art filenames already identify the game: EmuLatte writes every file as
-// <romId>_<type>, and CNGM uses either <gameId>_<store>_<type>_<stamp> or the game's
+// <romId>_<type>, and Clarity uses either <gameId>_<store>_<type>_<stamp> or the game's
 // own title with the characters its getBeautifulName() strips. We read both databases
 // *read-only*, purely to turn that into a real title and an id the owning app can open.
 // Both are optional — a clock sitting on its own has neither, and simply shows no label.
-const CNGM_DB = () => path.join(baseDir, 'GameManagerConfig', 'games.db');
+const CLARITY_DB = () => path.join(baseDir, 'GameManagerConfig', 'games.db');
 const EMU_DB  = () => path.join(baseDir, 'GameManagerConfig', 'EmuLatte', 'emulatte.db');
 
 let _maps = null;
 
-// CNGM strips these when naming art; mirror it so titles match back.
+// Clarity strips these when naming art; mirror it so titles match back.
 const beautify = s => s.replace(/[\\/:*?"<>|#]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
 
 function readGameMaps() {
     if (_maps) return _maps;
-    _maps = { cngmById: new Map(), cngmByName: new Map(), emuById: new Map() };
+    _maps = { clarityById: new Map(), clarityByName: new Map(), emuById: new Map() };
 
     let DatabaseSync;
     try { ({ DatabaseSync } = require('node:sqlite')); } catch { return _maps; }
@@ -227,9 +227,9 @@ function readGameMaps() {
         }
     };
 
-    load(CNGM_DB(), 'SELECT id, Game FROM games WHERE Game IS NOT NULL', r => {
-        _maps.cngmById.set(Number(r.id), r.Game);
-        _maps.cngmByName.set(beautify(String(r.Game)), Number(r.id));
+    load(CLARITY_DB(), 'SELECT id, Game FROM games WHERE Game IS NOT NULL', r => {
+        _maps.clarityById.set(Number(r.id), r.Game);
+        _maps.clarityByName.set(beautify(String(r.Game)), Number(r.id));
     });
     load(EMU_DB(), 'SELECT id, title FROM games WHERE title IS NOT NULL', r => {
         _maps.emuById.set(Number(r.id), r.title);
@@ -250,23 +250,23 @@ function resolveGame(stem, src) {
         return name ? { app: 'emulatte', id, name } : { app: 'emulatte', id: null, name: '' };
     }
 
-    // CNGM: <gameId>_<store>_<type>_<stamp> is exact. The trailing underscore matters —
+    // Clarity: <gameId>_<store>_<type>_<stamp> is exact. The trailing underscore matters —
     // without it a title like "1000xRESIST" would be read as game id 1000.
     const lead = stem.match(/^(\d+)_/);
-    if (lead && m.cngmById.has(Number(lead[1]))) {
+    if (lead && m.clarityById.has(Number(lead[1]))) {
         const id = Number(lead[1]);
-        return { app: 'cngm', id, name: m.cngmById.get(id) };
+        return { app: 'clarity', id, name: m.clarityById.get(id) };
     }
 
     // Strip the type suffix and any scraper tag the type regex leaves behind.
     const base  = stem.replace(/[\s_-]*(cover|hero|screen(?:shot)?|logo)[\s_\d-]*$/i, '');
     const title = base.replace(/[_-]+/g, ' ').replace(/\s+(sgdb|custom)$/i, '').replace(/\s+/g, ' ').trim();
-    const id    = m.cngmByName.get(beautify(title));
-    if (id !== undefined) return { app: 'cngm', id, name: m.cngmById.get(id) };
+    const id    = m.clarityByName.get(beautify(title));
+    if (id !== undefined) return { app: 'clarity', id, name: m.clarityById.get(id) };
 
     // No match — art for a game that was renamed or removed. Still label it from the
     // filename so it can be clicked; without an id the click just opens the library.
-    return { app: 'cngm', id: null, name: title };
+    return { app: 'clarity', id: null, name: title };
 }
 
 function scanImages(source) {
@@ -309,8 +309,8 @@ function scanImages(source) {
         }
     };
 
-    // CNGM: flat images dir, all types mixed
-    walk(path.join(baseDir, 'GameManagerConfig', 'images'), 'cngm');
+    // Clarity: flat images dir, all types mixed
+    walk(path.join(baseDir, 'GameManagerConfig', 'images'), 'clarity');
     // EmuLatte: structured subdirs
     walk(path.join(baseDir, 'GameManagerConfig', 'EmuLatte', 'images'), 'emulatte');
     // User-provided wallpapers alongside the AppImage

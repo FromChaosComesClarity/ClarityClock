@@ -4,7 +4,7 @@ let settings = {};
 
 async function init() {
     settings = await window.api.loadSettings();
-    applyColorTheme(settings.colorTheme || 'CREMA');
+    applyColorTheme(settings.colorTheme || 'Couch Mode');
     applyUiFont(settings.uiFont);
     syncUI();
     syncThemeTrigger();
@@ -34,7 +34,7 @@ function applyColorTheme(name) {
 
 // ── Sync button states ─────────────────────────────────────────────────────────
 function syncUI() {
-    ['minimalist', 'crema', 'kenburns'].forEach(t =>
+    ['minimalist', 'couch', 'kenburns'].forEach(t =>
         document.getElementById(`s-theme-${t}`)?.classList.toggle('active', settings.theme === t));
 
     const isKbTheme = settings.theme === 'kenburns';
@@ -113,7 +113,7 @@ function buildThemeModal() {
 
 function renderThemeCards(cat) {
     const grid   = document.getElementById('theme-grid');
-    const active = settings.colorTheme || 'CREMA';
+    const active = settings.colorTheme || 'Couch Mode';
     const names  = cat === 'All'
         ? Object.values(CN_THEME_CATEGORIES).flat()
         : (CN_THEME_CATEGORIES[cat] || []);
@@ -176,7 +176,7 @@ function renderThemeCards(cat) {
 }
 
 function syncThemeTrigger() {
-    const name = settings.colorTheme || 'CREMA';
+    const name = settings.colorTheme || 'Couch Mode';
     const t    = CN_THEMES[name];
     document.getElementById('theme-open-name').textContent = name;
     const sw = document.getElementById('theme-open-swatch');
@@ -255,7 +255,7 @@ function wireControls() {
         else window.api.closeSettings();
     });
 
-    ['minimalist', 'crema', 'kenburns'].forEach(t =>
+    ['minimalist', 'couch', 'kenburns'].forEach(t =>
         document.getElementById(`s-theme-${t}`)?.addEventListener('click', () => {
             settings.theme = t;
             window.api.applySettingLive('theme', t);
